@@ -83,7 +83,7 @@
                                             <li><a href="{{ route('about') }}">{{ __('About Us') }}</a></li>
                                              @endif
                                                @if($menu_arr['PinCode'] == 'Show')
-                                            <li><a href="#">PinCode list</a></li>
+                                            <li><a href="#">PinCode</a></li>
                                             @endif
                                                @if($menu_arr['Listing'] == 'Show')
                                            <li><a href="#"> Listing</a></li>
