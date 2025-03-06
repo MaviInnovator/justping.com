@@ -12,28 +12,40 @@
         <form action="{{ route('admin_brand_update',$brands->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="" class="form-label">{{ __('Business Name') }} *</label>
                         <input type="text" name="name" class="form-control" value="{{ $brands->name }}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="" class="form-label">{{ __('Slug') }}*</label>
                         <input type="text" name="slug" class="form-control" value="{{ $brands->slug }}">
                     </div>
                 </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                     <div class="mb-3">
                         <label for="" class="form-label">{{ __('Pincode') }} *</label>
                         <input type="text" name="pincode" class="form-control" value="{{ $brands->pincode }}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="" class="form-label">{{ __('Address') }} *</label>
-                        <input type="text" name="address" class="form-control" value="{{ $brands->address }}">
+                        <label for="" class="form-label">Building Number *</label>
+                        <input type="text" name="building_number" class="form-control" value="{{ $brands->building_number }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Street Number *</label>
+                        <input type="text" name="street_number" class="form-control" value="{{ $brands->street_number }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Area Name*</label>
+                        <input type="text" name="area_name" class="form-control" value="{{ $brands->area_name }}">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -54,7 +66,61 @@
                         <input type="text" name="state" class="form-control" value="{{ $brands->state }}">
                     </div>
                 </div>
-                
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Add Location *</label>
+                        <input type="text" name="location" class="form-control" value="{{ $brands->location }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Presence In other countries *</label>
+                        <input type="text" name="presence_other_country" class="form-control" value="{{ $brands->presence_other_country }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">GST Number </label>
+                        <input type="text" name="gst" class="form-control" value="{{ $brands->gst }}">
+                    </div>
+                </div>
+                 <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">PAN </label>
+                        <input type="text" name="pan_no" class="form-control" value="{{ $brands->pan_no }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Year Of Incorporation </label>
+                        <input type="text" name="year_of_coperation" class="form-control" value="{{ $brands->year_of_coperation }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">TAN</label>
+                        <input type="text" name="tan_no" class="form-control" value="{{ $brands->tan_no }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Turnover </label>
+                        <input type="text" name="turn_over" class="form-control" value="{{ $brands->turn_over }}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label"> Number of Employee </label>
+                        <input type="text" name="no_of_emp" class="form-control" value="{{ $brands->no_of_emp }}">
+                    </div>
+                </div>
+               
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label"> Title </label>
+                        <input type="text" name="title" class="form-control" value="{{ $brands->title }}">
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="" class="form-label">{{ __('Contact Person ') }} *</label>
@@ -64,8 +130,8 @@
                 
                 <div class="col-md-4">
                    <div class="mb-3">
-                        <label for="" class="form-label">{{ __('Mobile Number') }}</label>
-                        <input type="text" name="mobile_number" class="form-control" value="{{ $brands->mobile_number }}">
+                        <label for="" class="form-label">Official Number*</label>
+                        <input type="text" name="official_number" class="form-control" value="{{ $brands->official_number }}">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -107,15 +173,67 @@
                         <label for="" class="form-label">{{ __('Linkedin') }}</label>
                         <input type="text" name="linkedin" class="form-control" value="{{ $brands->linkedin }}">
                     </div>
-                </div>
-                
+                </div> 
                 <div class="col-md-4">
+                <div class="mb-3">
+                <div class="days">
+                
+                <label><input type="checkbox" name="days[]" value="Monday" class="day-btn" {{ in_array('Monday', $selectedDays) ? 'checked' : '' }}> Mon</label>
+                <label><input type="checkbox" name="days[]" value="Tuesday" class="day-btn" {{ in_array('Tuesday', $selectedDays) ? 'checked' : '' }}> Tue</label>
+                <label><input type="checkbox" name="days[]" value="Wednesday" class="day-btn" {{ in_array('Wednesday', $selectedDays) ? 'checked' : '' }}> Wed</label>
+                <label><input type="checkbox" name="days[]" value="Thursday" class="day-btn" {{ in_array('Thursday', $selectedDays) ? 'checked' : '' }}> Thu</label>
+                <label><input type="checkbox" name="days[]" value="Friday" class="day-btn" {{ in_array('Friday', $selectedDays) ? 'checked' : '' }}> Fri</label>
+                <label><input type="checkbox" name="days[]" value="Saturday" class="day-btn"  {{ in_array('Saturday', $selectedDays) ? 'checked' : '' }}> Sat</label>
+                <label><input type="checkbox" name="days[]" value="Sunday" class="day-btn" {{ in_array('Sunday', $selectedDays) ? 'checked' : '' }}> Sun</label>
+                </div>
+                </div>
+                </div>
+                    <div class="col-md-4">
+                      <div class="mb-3">
+                        <label for="" class="form-label">Open At</label>
+                        <select id="iconSelect" name="open_at" class="form-select">
+                            <option value="">Open At</option>
+                             <option value="08:00 AM" @if($brands->open_at=='08:00 AM') selected @endif>08:00 AM</option>
+                            <option value="09:00 AM" @if($brands->open_at=='09:00 AM') selected @endif>09:00 AM</option>
+                            <option value="10:00 AM" @if($brands->open_at=='10:00 AM') selected @endif>10:00 AM</option>
+                            <option value="11:00 AM"@if($brands->open_at=='11:00 AM') selected @endif>11:00 AM</option>
+                            
+                        </select>
+                    </div>
+                </div>
+                   <div class="col-md-4">
+                      <div class="mb-3">
+                        <label for="" class="form-label">Close At</label>
+                        <select id="iconSelect" name="close_at" class="form-select">
+                            <option value="">Close At</option>
+                             <option value="05:00 PM" @if($brands->close_at=='05:00 PM') selected @endif>05:00 PM</option>
+                             <option value="06:00 PM" @if($brands->close_at=='06:00 PM') selected @endif>06:00 PM</option>
+                             <option value="07:00 PM" @if($brands->close_at=='07:00 PM') selected @endif>07:00 PM</option>
+                             <option value="08:00 PM" @if($brands->close_at=='08:00 PM') selected @endif>08:00 PM</option>
+                             <option value="09:00 PM" @if($brands->close_at=='09:00 PM') selected @endif>09:00 PM</option>
+                            
+                        </select>
+                    </div>
+                </div>
+                    <div class="col-md-4">
                       <div class="mb-3">
                         <label for="" class="form-label">{{ __('Category') }}*</label>
                         <select id="iconSelect" name="category" class="form-select">
                             <option value="">{{ __('Select Category') }}</option>
                             @foreach($icons as $icon)
-                            <option value="{{ $icon->id }}" @if($icon->id==$brands->category) selected @endif>{{ $icon->name }}</option>
+                            <option value="{{ $icon->name }}" @if($icon->name==$brands->category) selected @endif>{{ $icon->name }}</option>
+                            @endforeach
+                        </select>
+                        <div id="iconPreview"></i></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                      <div class="mb-3">
+                        <label for="" class="form-label">{{ __('Subcategory') }}*</label>
+                        <select id="iconSelect" name="subcategory[]" class="form-select" multiple>
+                            <option value="">{{ __('Select Subcategory') }}</option>
+                            @foreach($subcat as $subcategory)
+                            <option value="{{ $subcategory->name }}" {{ in_array($subcategory->name, $selectedSubcategories) ? 'selected' : '' }}>{{ $subcategory->name }}</option>
                             @endforeach
                         </select>
                         <div id="iconPreview"></i></div>

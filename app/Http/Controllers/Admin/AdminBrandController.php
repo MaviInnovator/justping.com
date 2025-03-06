@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
 
 class AdminBrandController extends Controller
 {
@@ -20,7 +23,8 @@ class AdminBrandController extends Controller
     {
          $icons = Category::orderBy('id','asc')->get();
        
-        return view('admin.brand.create', compact('icons'));
+         $subcat = Subcategory::orderBy('id','asc')->get();
+        return view('admin.brand.create', compact('icons','subcat'));
     }
 
     public function store(Request $request)
@@ -49,25 +53,41 @@ class AdminBrandController extends Controller
         $request->banner->move(public_path('uploads'), $banner_name);
         $obj->banner = $banner_name;
         
-        $obj->name = $request->name;
-        $obj->slug = $request->slug;
-        
-        
-        $obj->pincode = $request->pincode;
-        $obj->address = $request->address;
-        $obj->landmark = $request->landmark;
-        $obj->city = $request->city;
-        $obj->state = $request->state;
-        $obj->contact_person = $request->contact_person;
-        $obj->mobile_number = $request->mobile_number;
-        $obj->whatsapp_number = $request->whatsapp_number;
-        $obj->email = $request->email;
-        $obj->facebook = $request->facebook;
-        $obj->twitter = $request->twitter;
-        $obj->instagram = $request->instagram;
-        $obj->linkedin = $request->linkedin;
-        $obj->category = $request->category;
-        $obj->keywords = $request->keywords;
+        $name = $request->input('name');
+            // Generate slug
+            $slug = Str::slug($name);
+    
+       $obj->name=$name;
+        $obj->slug=$slug;
+        $obj->pincode=$request->pincode;
+        $obj->building_number=$request->building_number;
+        $obj->street_number=$request->street_number;
+        $obj->area_name=$request->area_name;
+        $obj->landmark=$request->landmark;
+        $obj->city=$request->city;
+        $obj->state=$request->state;
+        $obj->location=$request->location;
+        $obj->presence_other_country=$request->presence_other_country;
+        $obj->gst=$request->gst;
+        $obj->pan_no=$request->pan_no;
+        $obj->year_of_coperation=$request->year_of_coperation;
+        $obj->tan_no=$request->tan_no;
+        $obj->turn_over=$request->turn_over;
+        $obj->no_of_emp=$request->no_of_emp;
+        $obj->title=$request->title;
+        $obj->contact_person=$request->contact_person;
+        $obj->official_number=$request->official_number;
+        $obj->whatsapp_number=$request->whatsapp_number;
+        $obj->email=$request->email;
+        $obj->facebook=$request->facebook;
+        $obj->twitter=$request->twitter;
+        $obj->instagram=$request->instagram;
+        $obj->linkedin=$request->linkedin;
+        $obj->days=json_encode($request->days);
+        $obj->open_at=$request->open_at;
+        $obj->close_at=$request->close_at;
+        $obj->category=$request->category;
+        $obj->subcategory=json_encode($request->subcategory);
         $obj->seo_title = $request->seo_title;
         $obj->seo_meta_description = $request->seo_meta_description;
         $obj->save();
@@ -78,8 +98,15 @@ class AdminBrandController extends Controller
     public function edit($id)
     {
         $brands = Brand::find($id);
+    $selectedDays = json_decode($brands->days, true) ?? []; 
+    
+    // Ensure it's an array
+    $selectedSubcategories =  json_decode($brands->subcategory, true) ?? [];
+
         $icons = Category::orderBy('id','asc')->get();
-        return view('admin.brand.edit', compact('brands', 'icons'));
+         $subcat = Subcategory::orderBy('id','asc')->get();
+     // echo "<pre>"; print_r($selectedSubcategories); die;
+        return view('admin.brand.edit', compact('brands', 'icons','selectedDays','subcat','selectedSubcategories'));
     }
 
     public function update(Request $request, $id)
@@ -115,24 +142,41 @@ class AdminBrandController extends Controller
             $request->banner->move(public_path('uploads'), $banner_name);
             $obj->banner = $banner_name;
         }
-
-        $obj->slug = $request->slug;
-        $obj->name = $request->name;
-        $obj->pincode = $request->pincode;
-        $obj->address = $request->address;
-        $obj->landmark = $request->landmark;
-        $obj->city = $request->city;
-        $obj->state = $request->state;
-        $obj->contact_person = $request->contact_person;
-        $obj->mobile_number = $request->mobile_number;
-        $obj->whatsapp_number = $request->whatsapp_number;
-        $obj->email = $request->email;
-        $obj->facebook = $request->facebook;
-        $obj->twitter = $request->twitter;
-        $obj->instagram = $request->instagram;
-        $obj->linkedin = $request->linkedin;
-        $obj->category = $request->category;
-        $obj->keywords = $request->keywords;
+$name = $request->input('name');
+            // Generate slug
+            $slug = Str::slug($name);
+    
+       $obj->name=$name;
+        $obj->slug=$slug;
+        $obj->pincode=$request->pincode;
+        $obj->building_number=$request->building_number;
+        $obj->street_number=$request->street_number;
+        $obj->area_name=$request->area_name;
+        $obj->landmark=$request->landmark;
+        $obj->city=$request->city;
+        $obj->state=$request->state;
+        $obj->location=$request->location;
+        $obj->presence_other_country=$request->presence_other_country;
+        $obj->gst=$request->gst;
+        $obj->pan_no=$request->pan_no;
+        $obj->year_of_coperation=$request->year_of_coperation;
+        $obj->tan_no=$request->tan_no;
+        $obj->turn_over=$request->turn_over;
+        $obj->no_of_emp=$request->no_of_emp;
+        $obj->title=$request->title;
+        $obj->contact_person=$request->contact_person;
+        $obj->official_number=$request->official_number;
+        $obj->whatsapp_number=$request->whatsapp_number;
+        $obj->email=$request->email;
+        $obj->facebook=$request->facebook;
+        $obj->twitter=$request->twitter;
+        $obj->instagram=$request->instagram;
+        $obj->linkedin=$request->linkedin;
+        $obj->days=json_encode($request->days);
+        $obj->open_at=$request->open_at;
+        $obj->close_at=$request->close_at;
+        $obj->category=$request->category;
+        $obj->subcategory=json_encode($request->subcategory);
         $obj->seo_title = $request->seo_title;
         $obj->seo_meta_description = $request->seo_meta_description;
         $obj->update();

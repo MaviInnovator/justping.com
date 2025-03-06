@@ -40,6 +40,14 @@
     </a>
 </li>
 
+<li class="nav-item {{ Request::is('admin/subcategory/*') ? 'active' : ''; }}">
+    <a class="nav-link" href="{{ route('admin_subcategory_index') }}">
+        <i class="far fa-caret-square-right"></i>
+        <span>{{ __('Subcategory') }}</span>
+    </a>
+</li>
+
+
 <li class="nav-item {{ Request::is('admin/brand/*') ? 'active' : ''; }}">
     <a class="nav-link" href="{{ route('admin_brand_index') }}">
         <i class="far fa-caret-square-right"></i>

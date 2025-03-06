@@ -4,99 +4,121 @@
 @section('seo_meta_description', $global_other_page_items->page_contact_seo_meta_description)
 
 @section('content')
-<section class="page-title" style="background-image: url({{ asset('uploads/'.$global_setting->banner) }});">
-    <div class="auto-container">
-        <div class="title-outer">
-            <h1 class="title">{{ $global_other_page_items->page_contact_title }}</h1>
-            <ul class="page-breadcrumb">
-                <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
-                <li>{{ $global_other_page_items->page_contact_title }}</li>
-            </ul>
-        </div>
-    </div>
-</section>
-<section class="contact-details">
-    <div class="container ">
-        <div class="row">
-            <div class="col-xl-7 col-lg-6">
-                <div class="sec-title">
-                    <span class="sub-title">{{ $global_other_page_items->page_contact_send_mail_subheading }}</span>
-                    <h2>{!! str_replace(["<p>", "</p>"], ["", ""], clean(nl2br($global_other_page_items->page_contact_send_mail_heading))) !!}</h2>
-                </div>
-                <form id="contact_form" name="contact_form" class="" action="{{ route('contact_send_message') }}" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <input name="name" class="form-control" type="text" placeholder="{{ __('Full Name') }}" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-3">
-                                <input name="email" class="form-control" type="email" placeholder="{{ __('Email Address') }}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <input name="subject" class="form-control" type="text" placeholder="{{ __('Subject') }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <textarea name="message" class="form-control" rows="7" placeholder="{{ __('Message') }}" required></textarea>
-                    </div>
-                    
-                    @if($global_setting->google_recaptcha_status == 'Show')
-                    <div class="mb-3">
-                        <div class="g-recaptcha" data-sitekey="{{ $global_setting->google_recaptcha_site_key }}"></div>
-                    </div>
-                    @endif
-                    
-                    <div class="mb-3">
-                        <input name="form_botcheck" class="form-control" type="hidden" value="" />
-                        <button type="submit" class="theme-btn btn-style-one" data-loading-text="{{ __('Please wait...') }}"><span class="btn-title">{{ __('Send Message') }}</span></button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-xl-5 col-lg-6">
-                <div class="contact-details__right">
-                    <div class="sec-title">
-                        <span class="sub-title">{{ $global_other_page_items->page_contact_info_subheading }}</span>
-                        <h2>{!! str_replace(["<p>", "</p>"], ["", ""], clean(nl2br($global_other_page_items->page_contact_info_heading))) !!}</h2>
-                        <div class="text">{!! str_replace(["<p>", "</p>"], ["", ""], clean(nl2br($global_other_page_items->page_contact_info_text))) !!}</div>
-                    </div>
-                    <ul class="list-unstyled contact-details__info">
-                        <li>
-                            <div class="icon bg-theme-color2">
-                                <span class="lnr-icon-phone-plus"></span>
-                            </div>
-                            <div class="text">
-                                <h6>{{ $global_other_page_items->page_contact_info_phone_title }}</h6>
-                                <a href="tel:{{ $global_other_page_items->page_contact_info_phone_value }}">{{ $global_other_page_items->page_contact_info_phone_value }}</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <span class="lnr-icon-envelope1"></span>
-                            </div>
-                            <div class="text">
-                                <h6>{{ $global_other_page_items->page_contact_info_email_title }}</h6>
-                                <a href="mailto:{{ $global_other_page_items->page_contact_info_email_value }}">{{ $global_other_page_items->page_contact_info_email_value }}</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="icon">
-                                <span class="lnr-icon-location"></span>
-                            </div>
-                            <div class="text">
-                                <h6>{{ $global_other_page_items->page_contact_info_address_title }}</h6>
-                                <span>{{ $global_other_page_items->page_contact_info_address_value }}</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <section class="about-section"  style="background-image: url({{ asset('uploads/'.$global_setting->banner) }});"> 
+		<div class="container">
+			<div class="row about-breadcrumbs">
+				<div class="col-md-6">
+					<div class="about-head">
+						<h2>Contact Us</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumbs">
+							<li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+ <!-- About Area Start Here -->
+        <div class="section-white">
+		<div class="container">
+			<div class="contact-title text-center">
+				<h3>Let's Discuss Your Idea</h3>
+				<p>We appreciate your interest in VR Soft Solutions</p>
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<div class="loc-box contact-pg">
+						<i class="ri-map-pin-line"></i>
+						<h6>Location</h6>
+					
+            <p>A12/13 Noida Sector 16 ,
+Gautam buddha nagar ,
+Uttar Pradesh - 201301</p>
+					</div>
+					<div class="loc-box contact-pg">
+						<i class="ri-mail-send-line"></i>
+						<h6>Mail us</h6>
+						<p> info@justping.com</p>
+					</div>
+					<div class="loc-box contact-pg">
+						<i class="ri-24-hours-line"></i>
+						<h6>Contact Number</h6>
+						<p>+91 98181 33151,+91 9266434392</p>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="contact-form aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+						<form action="#" >
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="ri-user-line"></i></div>
+										</div>
+										<input type="text" class="form-control" id="" placeholder="First Name" fdprocessedid="1jko0a">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="ri-user-line"></i></div>
+										</div>
+										<input type="text" class="form-control" id="" placeholder="Last Name" fdprocessedid="1jko0a">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="ri-mail-line"></i></div>
+										</div>
+										<input type="text" class="form-control" id="" placeholder="Enter E-mail" fdprocessedid="s0xesu">
+									</div>
+								</div>
+								<div class="col-sm-6 ">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="ri-phone-line"></i></div>
+										</div>
+										<input type="text" class="form-control" id="" placeholder="Mobile Number" fdprocessedid="8dkw0v">
+									</div>
+								</div>
+								<div class="col-sm-6 my-1">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="ri-git-pull-request-line"></i></div>
+										</div>
+										
+										<input type="text" class="form-control" id="" placeholder="Country" fdprocessedid="8dkw0v">
+									</div>
+								</div>
+								
+								<div class="col-sm-6 my-1">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="ri-git-pull-request-line"></i></div>
+										</div>
+										
+										<input type="text" class="form-control" id="" placeholder="State" fdprocessedid="8dkw0v">
+									</div>
+								</div>
+								<div class="form-group mb-4">
+									<textarea class="form-control" id="" placeholder="Enquiry Description" rows="5"></textarea>
+								</div>
+							</div>
+							<button class="theme-btn btn-style-three" type="submit" name="submit-form" fdprocessedid="d7zaea"><span class="txt">Send Now</span></button>
+
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 @if($global_setting->map != '')
 <section class="map-section">

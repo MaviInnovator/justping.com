@@ -17,12 +17,22 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+        protected $table = 'user';  // 👈 Custom table name
+        protected $primaryKey = 'id'; // 👈 Custom primary key
+        
+        public $incrementing = true;  // 👈 If the primary key isn't auto-incrementing
+    
     protected $fillable = [
-        'name',
+      'name',
         'email',
         'password',
+        'mobile',
+        'email_verified_at',
+        'email_verification_token',
+        'image',
+        'user_type',
+        'status'
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *

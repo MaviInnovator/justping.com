@@ -1,13 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Front;
+use App\Models\UserDetails;
+
+use DB;
+use App\Helpers\Helper;
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Hash;
 use Auth;
 use App\Mail\Websitemail;
-use App\Models\User;
 use App\Models\Admin;
 use App\Models\Slider;
 use App\Models\Service;
@@ -52,9 +61,16 @@ use App\Models\HomeFourPageItem;
 use App\Models\HomeContactPhoto;
 use App\Models\Language;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Subcategory;
+
+use App\Models\User;
 class FrontController extends Controller
 {
     protected $sliders;
+    protected $category;
+    protected $subcategory;
     protected $services;
     protected $licenses;
     protected $testimonials;
@@ -85,6 +101,11 @@ class FrontController extends Controller
 
     public function __construct()
     {
+        $this->category = Category::orderBy('id', 'asc')->limit(30)->get();
+
+        $this->subcategory = Subcategory::orderBy('id','asc')->get();
+        $this->sliders = Slider::get();
+        $this->sliders = Slider::get();
         $this->sliders = Slider::get();
         $this->services = Service::orderBy('id','asc')->get();
         $this->licenses = Portfolio::orderBy('id','asc')->get();
@@ -122,6 +143,8 @@ class FrontController extends Controller
     private function home_data()
     {
         return [
+            'category' => $this->category, 
+            'subcategory' => $this->subcategory, 
             'sliders' => $this->sliders, 
             'services' => $this->services,
             'licenses' => $this->licenses,
@@ -199,12 +222,23 @@ class FrontController extends Controller
         $welcome_one_item_elements = WelcomeOneItemElement::get();
         return view('front.about', compact('services', 'team_members', 'welcome_one_items', 'welcome_one_item_elements'));
     }
+ 
 
-    public function services()
+    public function post_requirement()
     {
-        $services = Service::orderBy('name','asc')->get();
-        return view('front.services', compact('services'));
+        
+        $categories = Category::orderBy('name','asc')->get();
+        $subcategories = Subcategory::orderBy('id','asc')->get();
+        return view('front.post_requirement',compact('categories', 'subcategories'));
     }
+    public function bussiness_profile()
+    {
+        
+        $categories = Category::pluck('name')->toArray();
+        $subcategories = Subcategory::pluck('name')->toArray();
+        return view('front.bussiness_profile',compact('categories', 'subcategories'));
+    }
+
 
     public function service($slug)
     {
@@ -523,5 +557,298 @@ class FrontController extends Controller
         
         return response()->json(['success' => 'Form submitted successfully!']);
     }
+
+
+//////////////////Login////////
+ public function signIn(Request $req)
+    {
+        if ($req->ajax()) {
+            $reqType = $req->type;
+                $req_mobile_email = $req->phone;
+                $validator = Validator::make($req->only('phone'), ['phone' => 'required|numeric|digits:10']);
+            
+            if ($validator->fails()) {
+                return ['status' => 400, 'data' => $validator->getMessageBag()->toArray()];
+            } else {
+                switch ($reqType) {
+                    case 'send':
+                        return $this->sendOTP($req_mobile_email);
+                        break;
+
+                    case 'verify':
+                        return $this->verifyOTP($req_mobile_email, $req->otp);
+                        break;
+
+                    default:
+                       return response()->json(['status' => 500, 'msg' => 'Invalid request.']);
+                        break;
+                }
+            }
+        }
+        
+        $categories = Category::orderBy('name','asc')->get();
+        $subcategories = Subcategory::orderBy('id','asc')->get();
+        return view('front.post_requirement',compact('categories', 'subcategories'));
+       // return view('auth.login-new');
+    }
+
+    public function sendOTP($EmailOrMobile)
+    {
+       
+        //Log::info('NewAuthController::sendOTP() Starts');
+       // $userCountry = session()->get('currency');
+        try {
+
+            $userData = User::where('mobile', $EmailOrMobile)->where('user_type', 'USER')->first();
+
+            $otpNo = rand(1000, 9999);
+            //dd($userData);
+
+            if ($userData) {
+               // echo "hello OTP"; die;
+                $userData->otp = $otpNo;
+                $userData->user_type = "Old User";
+                if ($userData->save()) {
+                
+                    return ['status' => 201, 'data' => ['otp' => $otpNo,'userType' => 'Old User', 'mobile' => $EmailOrMobile]];
+                    die;
+                } else {
+                    echo "hello send fail msg"; die;
+                    return ['status' => 500, 'data' => 'Sorry!, Something went wrong.to send otp'];
+                }
+            } else {
+                
+                 $this->registerUser($EmailOrMobile, $otpNo);
+                return ['status' => 201, 'data' => ['otp' => $otpNo,'userType' => 'New User', 'mobile' => $EmailOrMobile]];
+                die;
+                // if ($userCountry == "IN") {
+                //     CommonModel::gupshupSMS($EmailOrMobile, $txt);
+                // } else {
+                //     CommonModel::getOtpEmail($EmailOrMobile, $otpNo);
+                // }
+                return ['status' => 201, 'data' => ['otp' => $otpNo, 'mobile' => $EmailOrMobile]];
+            }
+        } catch (\Throwable $th) {
+            Log::info('NewAuthController::sendOTP() has Some errors');
+           
+    //dd($th->getMessage());  // Show the exact error
+            return ['status' => 500, 'msg' => 'Sorry!, Something went wrong.123'];
+        }
+
+        //Log::info('NewAuthController::sendOTP() Ends');
+    }
+
+    public function verifyOTP($mobileNo, $otp)
+    {
+          try {
+            $user = User::where('mobile', $mobileNo)->where('otp', $otp)->first();
+
+            if ($user) {
+                // Reset OTP after successful verification
+                $user->otp = null;
+                $user->save();
+
+               Session::put('user_id', $user->id);
+               //return Redirect::route('bussiness-profile'); 
+                return response()->json(['status' => 201, 'data' => ['msg' => 'Logged in successfully', 'url' => route('bussiness-profile')]]);
+            } else {
+                return response()->json(['status' => 400, 'data' => ['phone' => 'Incorrect OTP entered.']]);
+            }
+         
+        } catch (\Throwable $th) {
+            Log::error('Error in verifyOTP: ' . $th->getMessage());
+            return response()->json(['status' => 500, 'msg' => 'Something went wrong.']);
+        }
+
+     //   Log::info('NewAuthController::verifyOTP() Ends');
+    }
+
+    public function registerUser($mobileNo, $otp)
+    {
+        // $userData          = User::where('mobile', $mobileNo)->get();
+       
+        // if($userData->count()==0){
+        $userCountry = "IN";
+       // Log::info('NewAuthController::registerUser() Starts');
+        try {
+            $obj = new User();
+            $obj->name = 'Guest User';
+            $obj->email = ($userCountry == "IN") ? 'new_' . time() . '@xyz.com' : $mobileNo;
+            $obj->password = Hash::make('987654321');
+            $obj->mobile = $mobileNo;
+            $obj->country_code = 91;
+            $obj->otp = $otp;
+            $obj->user_type = 'USER';
+            $obj->status = 1;
+            $obj->image = 'default/default-user-image.png';
+
+            if ($obj->save()) {
+
+          //  DB::enableQueryLog(); // Start logging queries
+            
+           $userDetail = new UserDetails();
+            $userDetail->user_id = $obj->id;
+           
+            $userDetail->mobile2 = $mobileNo;
+             
+            $userDetail->profile_image = 'default/astro-expert-banner.jpg';
+            $userDetail->image_path = '/public/cms-images/user-images/';
+           $userDetail->save();
+            //dd(DB::getQueryLog()); // Print executed query
+            } else {
+               // echo "hello21";die;
+                Log::info(json_encode($obj));
+                return ['status' => 500, 'msg' => 'Sorry!, Something went wrong.'];
+            }
+        } catch (\Throwable $th) {
+            //echo "hello121";die;
+         Log::error('Error in registerUser: ' . $th->getMessage());
+            return response()->json(['status' => 500, 'msg' => 'Something went wrong. test']);
+        }
+       // Log::info('NewAuthController::registerUser() Ends');
+    // } else {
+        
+    //     return ['status' => 500, 'msg' => 'Sorry!, User already register.'];
+    // }
+    }
+
+    public function guestUser()
+    {
+        $otpNo = rand(1000, 9999);
+        //$mobileNo=$req->mobile;
+        Log::info('NewAuthController::guestUser() Starts');
+        try {
+            $obj = new User();
+            $obj->name = 'Guest';
+            $obj->email = 'new_' . time() . '@xyz.com';
+            $obj->password = Hash::make('987654321');
+            //$obj->mobile = $mobileNo;
+            $obj->country_code = 91;
+            $obj->otp = $otpNo;
+            $obj->user_type = 'USER';
+            $obj->status = 1;
+            $obj->image = 'default/default-user-image.png';
+            if ($obj->save()) {
+
+                $userDetail = new UserDetails();
+                $userDetail->user_id = $obj->id;
+                // $userDetail->mobile2 = $mobileNo;
+                $userDetail->profile_image = 'default/astro-expert-banner.jpg';
+                $userDetail->image_path = '/public/cms-images/user-images/';
+                $userDetail->save();
+            } else {
+                echo "helloguest";die;
+                Log::info(json_encode($obj));
+                return ['status' => 500, 'msg' => 'Sorry!, Something went wrong.'];
+            }
+            // $user = User::find($obj->id);
+            Auth::login($obj);
+        } catch (\Throwable $th) {
+            Log::info('NewAuthController::guestUser() has Some errors');
+            Log::critical($th);
+            return ['status' => 500, 'msg' => 'Sorry!, Something went wrong.'];
+        }
+
+        Log::info('NewAuthController::guestUser() Ends');
+    }
+    public function guestUserUpdate(Request $request){
+       
+        $user=Auth::user();
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->save();
+        return response()->json(['message'=>'success'], 200);
+
+    }
+    public function Logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect(route('home'));
+    }
+    
+    
+    
+    ///////////////////Wizard Form /////////////////////////////
+    
+
+public function wizardstore(Request $request)
+    {
+        
+    $name = $request->input('name');
+// Generate slug
+    $slug = Str::slug($name);
+$photo_name = 'photo'.time().'.'.$request->photo->extension();
+$request->photo->move(public_path('uploads'), $photo_name);
+ $obj = new Brand();
+ 
+        $obj->name=$request->name;
+        $obj->slug=$slug;
+        $obj->pincode=$request->pincode;
+        $obj->building_number=$request->building_number;
+        $obj->street_number=$request->street_number;
+        $obj->area_name=$request->area_name;
+        $obj->landmark=$request->landmark;
+        $obj->city=$request->city;
+        $obj->state=$request->state;
+        $obj->location=$request->location;
+        $obj->presence_other_country=$request->presence_other_country;
+        $obj->gst=$request->gst;
+        $obj->pan_no=$request->pan_no;
+        $obj->year_of_coperation=$request->year_of_coperation;
+        $obj->tan_no=$request->tan_no;
+        $obj->turn_over=$request->turn_over;
+        $obj->no_of_emp=$request->no_of_emp;
+        $obj->title=$request->title;
+        $obj->contact_person=$request->contact_person;
+        $obj->official_number=$request->official_number;
+        $obj->whatsapp_number=$request->whatsapp_number;
+        $obj->email=$request->email;
+        $obj->facebook=$request->facebook;
+        $obj->twitter=$request->twitter;
+        $obj->instagram=$request->instagram;
+        $obj->linkedin=$request->linkedin;
+        $obj->days=json_encode($request->days);
+        $obj->open_at=$request->open_at;
+        $obj->close_at=$request->close_at;
+        $obj->category=$request->category;
+        $obj->photo=$photo_name;
+        //$obj->banner=$request->name;
+        $obj->subcategory=json_encode($request->subcategory);
+         $obj->save();
+        
+    return response()->json(['message' => 'Data saved successfully!']);
+    }
+    
+
+    public function listing()
+    {
+        
+        $brands = Brand::orderBy('id','desc')->get();
+if ($brands->isNotEmpty()) {
+    $selectedSubcategories = json_decode($brands->first()->subcategory ?? '[]', true);
+} else {
+    $selectedSubcategories = [];
+}
+        $categories = Category::orderBy('name','asc')->get();
+        $subcategories = Subcategory::orderBy('id','asc')->get();
+        return view('front.listing', compact('brands','categories','subcategories','selectedSubcategories'));
+    }
+    
+       public function listing_details($brandId)
+    {
+       
+        $brands = Brand::where('id', $brandId)->first();
+if ($brands) {
+    $selectedSubcategories = json_decode($brand->subcategory ?? '[]', true);
+} else {
+    $selectedSubcategories = [];
+}
+        $categories = Category::orderBy('name','asc')->get();
+        $subcategories = Subcategory::orderBy('id','asc')->get();
+        return view('front.listing-details', compact('brands','categories','subcategories','selectedSubcategories'));
+    }
+    
+    
 
 }

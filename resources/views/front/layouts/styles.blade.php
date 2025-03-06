@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="{{ asset('justping-front/css/featured-franchise-opportunities.css') }}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('justping-front/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('justping-front/css/product.css') }}">
+    <link rel="stylesheet" href="{{ asset('justping-front/css/form.css') }}">
     
 @if(session('sess_lang_direction') == 'Right to Left (RTL)')
 <link href="{{ asset('dist-front/css/rtl.css') }}" rel="stylesheet">

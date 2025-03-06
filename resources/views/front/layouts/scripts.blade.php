@@ -3,7 +3,7 @@
     <!-- Popper js -->
     <script src="{{ asset('justping-front/js/popper.js') }}"></script>
     <!-- Bootstrap js -->
-    <script src="j{{ asset('justping-front/js/bootstrap.min.js') }}"></script>
+    <!--<script src="{{ asset('justping-front/js/bootstrap.min.js') }}"></script>-->
     <!-- Owl Cauosel JS -->
     <script src="{{ asset('justping-front/vendor/OwlCarousel/owl.carousel.min.js') }}"></script>
     <!-- Meanmenu Js -->
@@ -21,6 +21,11 @@
     <script src="{{ asset('justping-front/js/jquery.magnific-popup.min.js') }}"></script>
     <!-- Custom Js -->
     <script src="{{ asset('justping-front/js/main.js') }}"></script>
+    
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="{{ asset('justping-front/js/form.js') }}"></script>
   <!-- Bootstrap JS (with Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -106,99 +111,10 @@ function fetchArea() {
                 })
                 .catch(error => console.error("Error fetching area details:", error));
         }
-    </script>
-     <script>
-       function shouldShowModal() {
-        const modalClosedTimestamp = localStorage.getItem('popupClose');
-        if (!modalClosedTimestamp) return true;
-
-        const now = new Date();
-        const lastClosed = new Date(parseInt(modalClosedTimestamp, 10));
-
-        // Check if the modal was closed on a previous day
-        return now.toDateString() !== lastClosed.toDateString();
-      }
-        let generatedOTP;
-
-// Check if modal was shown today
-      /*  function shouldShowModal() {
-            const lastShown = localStorage.getItem("modalLastShown");
-            const today = new Date().toDateString();
-
-            return lastShown !== today; // Show modal only if it hasn't been shown today
-        }
-
-        // Show modal after 5 seconds (only once per day)
-        setTimeout(() => {
-            if (shouldShowModal()) {
-                document.getElementById("loginModal").style.display = "block";
-                localStorage.setItem("modalLastShown", new Date().toDateString()); // Save today's date
-            }
-        }, 5000);
-
-*/
-        // Show modal after 5 seconds
-        setTimeout(() => {
-            document.getElementById("loginModal").style.display = "block";
-        }, 5000);
-
-        // Close modal
-        function closeModal() {
-            document.getElementById("loginModal").style.display = "none";
-        }
-
-        // Function to send OTP
-        function sendOTP() {
-            let phone = document.getElementById("phoneNumber").value;
-            let termsChecked = document.getElementById("termsCheckbox").checked;
-            if (phone.length !== 10 || isNaN(phone)) {
-                alert("Please enter a valid 10-digit phone number.");
-                return;
-            }
-            if (!termsChecked) {
-                alert("⚠️ You must accept the Terms & Conditions to proceed.");
-                return;
-            }
-            generatedOTP = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
-            alert("Your OTP is: " + generatedOTP); // Simulating SMS
-
-            document.querySelector(".loginSection").style.display = "none";
-            document.querySelector(".close-btn1").style.display = "none";
-            document.getElementById("otpSection").style.display = "block";
-            
-            
-            document.querySelector(".verify-otp-btn").style.display = "inline-block";
-        }
-
-        // Function to verify OTP
-        function verifyOTP() {
-            let enteredOTP = document.getElementById("otpInput").value;
-            if (enteredOTP == generatedOTP) {
-                alert("Login successful!");
-                closeModal();
-            } else {
-                alert("Invalid OTP. Please try again.");
-            }
-        }
-            function closeBanner() {
+        function closeBanner() {
             document.getElementById("floatingBanner").style.display = "none";
         }
     </script>
-  <script>
-        $(document).ready(function () {
-            $("#openModal").click(function () {
-                $("#loginModal").fadeIn(); // Show the modal
-            });
-
-            $(".close, #loginModal").click(function (event) {
-                if (event.target === this) {
-                    $("#loginModal").fadeOut(); // Hide the modal
-                }
-            });
-        });
-    </script>
-
-
 
 @if($global_setting->google_recaptcha_status == 'Show')
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -301,3 +217,192 @@ function fetchArea() {
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+          var otpTimeTotal = 60;
+        $(".sendOTPBtn").click(function(e) {
+        e.preventDefault();
+        var number = $('#inputPhone').val();
+     // alert(number);
+            if (number.length == 10) {
+                sendOTP(number);
+            } else {
+                alert('Phone Number should be of 10 Digits');
+            }
+       
+    });
+        
+    });
+      let digitValidate = function(element, key) {
+        element.value = element.value.replace(/[^0-9]/g, '');
+
+        let ele = document.querySelectorAll('.otp-field');
+        var charCode = event.keyCode || event.charCode;
+
+        if (ele[key - 1].value != '') {
+            if (key <= 4) {
+                ele[key].focus();
+            }
+        } else if (ele[key - 1].value == '') {
+            if (charCode == 8 || charCode == 46) {
+                element.preventDefault();
+                ele[key - 2].focus()
+            } else {
+                ele[key - 2].focus()
+            }
+        }
+    }
+
+      var otpTimeTotal = 60;
+        let countdown = function() {
+        if (otpTimeTotal == -1) {
+            clearTimeout(window.timerId);
+            $('.otpResendBlock').removeClass('d-none').addClass('d-block');
+            $('.otpTimerBlock').removeClass('d-block').addClass('d-none');
+        } else {
+            valueCheck = (otpTimeTotal < 10) ? "0" + otpTimeTotal : otpTimeTotal;
+            $('.otpTimerBlock').addClass('d-block').removeClass('d-none').html(
+                `<strong>Resend OTP - <span class="text-danger">${valueCheck}s</span></strong>`
+            );
+            otpTimeTotal--;
+            $('.otpResendBlock').removeClass('d-block').addClass('d-none');
+        }
+    }
+
+  
+  let sendOTP = function(number) {
+        $.ajax({
+            url: "{{ route('sign-in-new') }}",
+            method: "post",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            data: {
+                phone: number,
+                'type': 'send'
+            },
+            beforeSend: function() {
+                $('.errorMssg').html("");
+                $(".sendOTPBtn").html('Please wait').attr('disabled', 'disabled');
+            },
+            success: function(response) {
+                switch (response.status) {
+                    case 201:
+                        
+                        $('.register-block').addClass('d-none');
+                        $('.verification-block').removeClass('d-none').addClass('d-block');
+                       
+                        //$('.wait-block').removeClass('d-block').addClass('d-none');
+                        window.timerId = setInterval(countdown, 1000);
+                        // $('.mobileNumberOTP').html(
+                        //     `<span style="color:#616161"><strong>OTP sent to</strong></span> <strong style="color:#000"> ${response.data.mobile}</strong>`
+                        // );
+                        $('.tempOTP').html((response.data.otp));
+                        $(".resendOTPBtn").attr('data-mobile', response.data.mobile)
+                        $(".verifyOTPBtn").attr('data-mobile', response.data.mobile)
+                        //$('.title').html(`<h5 class="m-0">Verify ${phoneEmailTxt}</h5>`);
+                       // $('.backModalBtn').css('visibility', 'visible');
+                        break;
+
+                    case 400:
+                        $(".sendOTPBtn").html(
+                            'GET OTP '
+                        ).removeAttr('disabled');
+                        $('.mobile-block').removeClass('d-none').addClass('d-block');
+                        $('.verification-block').removeClass('d-block').addClass('d-none');
+                        $('.tempOTP').html('');
+
+                        $('#inputPhone').after(
+                            `<small class="text-danger errorMssg">${response.data.phone}</small>`
+                        )
+                        $('.title').html(`<h5 class="m-0">Continue ${phoneEmailTxt}</h5>`);
+                        $('.backModalBtn').css('visibility', 'hidden');
+                        break;
+
+                    default:
+                        $(".sendOTPBtn").html(
+                            'GET OTP '
+                        ).removeAttr('disabled');
+                        $('.mobile-block').removeClass('d-none').addClass('d-block');
+                        $('.verification-block').removeClass('d-block').addClass('d-none');
+                        $('.tempOTP').html('');
+                        $('.title').html(`<h5 class="m-0">Continue ${phoneEmailTxt}</h5>`);
+                        $('.backModalBtn').css('visibility', 'hidden');
+
+                        alert(response.msg)
+                        break;
+                }
+            },
+            error: function(reject) {
+                $(".sendOTPBtn").html(
+                    'GET OTP '
+                ).removeAttr('disabled');
+                alert('Sorry, Something went wrong!');
+            }
+        });
+    }
+    
+    
+    
+     $(".verifyOTPBtn").click(function(e) {
+        e.preventDefault();
+        var url_name = 'post-requirement';
+        var otp = '';
+        var mobile = $(this).data('mobile');
+        alert(mobile);
+        let ele = document.querySelectorAll('.otp-field');
+        $.each(ele, function(key, val) {
+            otp += val.value
+        })
+
+        $.ajax({
+            url: "{{ route('sign-in-new') }}",
+            method: "post",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            data: {
+                phone: mobile,
+                'otp': otp,
+                'type': 'verify',
+                'url': url_name
+            },
+            beforeSend: function() {
+                $(".errorMssgOTP").html('');
+                $(".verifyOTPBtn").html('Please wait').attr('disabled', 'disabled');
+            },
+            success: function(response) {
+                switch (response.status) {
+                    case 201:
+                        $(".verifyOTPBtn").html('Verify OTP').removeAttr('disabled');
+                        $('.errorOTPBlock').html(
+                            `<small class="text-success errorMssgOTP">${response.data.msg}</small>`
+                        );
+
+                        setTimeout(() => {
+                                location.href = response.data.url;
+                           
+                        }, 2000);
+                        break;
+
+                    case 400:
+                        $(".verifyOTPBtn").html('Verify OTP').removeAttr('disabled');
+                        $('.otp-fields').after(
+                            `<small class="text-danger errorMssgOTP">${response.data.phone}</small>`
+                        )
+                        break;
+
+                    default:
+                        $(".verifyOTPBtn").html('Verify OTP').removeAttr('disabled');
+                        alert('Sorry!, Something went wrong');
+                        break;
+                }
+            },
+            error: function(reject) {
+                $(".verifyOTPBtn").html('Verify OTP').removeAttr('disabled');
+                alert('Sorry, Something went wrong!');
+            }
+        })
+    });
+    </script>

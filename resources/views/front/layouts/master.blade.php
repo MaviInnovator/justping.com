@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="_token" content="{{ csrf_token() }}">
 
     <title >@yield('seo_title')</title>
     <meta name="description" content="@yield('seo_meta_description')">
@@ -86,7 +87,7 @@
                                             <li><a href="#">PinCode</a></li>
                                             @endif
                                                @if($menu_arr['Listing'] == 'Show')
-                                           <li><a href="#"> Listing</a></li>
+                                           <li><a href="{{ route('listing') }}"> Listing</a></li>
                                            @endif
                                                @if($menu_arr['Advertise'] == 'Show')
                                             <li><a href="#">Advertise</a></li>
@@ -107,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-3 text-right">
-                                <a href="#" class="cp-default-btn">Post Requirement</a>
+                                <a href="{{ route('post-requirement') }}" class="cp-default-btn">Post Requirement</a>
                             </div>
                         </div>
                     </div>
@@ -248,80 +249,80 @@
 
         <!-- Main Footer -->
          
-        <footer>
-            <div class="footer-area-top s-space-equal">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                            <div class="footer-box">
-                                <h3 class="title-medium-light title-bar-left size-lg">About us</h3>
-                                <ul class="useful-link">
-                                    <li>
-                                        <a href="#">About us</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">PinCode </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"> Advertise</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Terms &amp; Conditions</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Privacy Policy</a>
-                                    </li>
-                                   
-                                </ul>
-                            </div>
+
+      <footer>
+        <div class="footer-area-top s-space-equal">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="footer-box">
+                            <h3 class="title-medium-light title-bar-left size-lg">About us</h3>
+                            <ul class="useful-link">
+                                <li>
+                                    <a href="{{ route('about') }}">About us</a>
+                                </li>
+                                <li>
+                                    <a href="#">PinCode </a>
+                                </li>
+                                <li>
+                                    <a href="#"> Advertise</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('terms') }}">Terms &amp; Conditions</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('privacy') }}">Privacy Policy</a>
+                                </li>
+                               
+                            </ul>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                            <div class="footer-box">
-                                <h3 class="title-medium-light title-bar-left size-lg">___</h3>
-                                <ul class="useful-link">
-                                      <li>
-                                        <a href="#">Listing</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Franchise</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Business</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Personal</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Post Requirement</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="footer-box">
+                            <h3 class="title-medium-light title-bar-left size-lg">___</h3>
+                            <ul class="useful-link">
+                                  <li>
+                                    <a href="#">Listing</a>
+                                </li>
+                                <li>
+                                    <a href="#">Franchise</a>
+                                </li>
+                                <li>
+                                    <a href="#">Business</a>
+                                </li>
+                                <li>
+                                    <a href="#">Personal</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('post-requirement') }}">Post Requirement</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                            <div class="footer-box">
-                                <h3 class="title-medium-light title-bar-left size-lg">Help &amp; Support</h3>
-                                <ul class="useful-link">
-                                    <li>
-                                        <a href="#">Live Chat</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">FAQ</a>
-                                    </li>  <li>
-                                        <a href="#">Blogs</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Contact us</a>
-                                    </li>
-                                  
-                                </ul>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="footer-box">
+                            <h3 class="title-medium-light title-bar-left size-lg">Help &amp; Support</h3>
+                            <ul class="useful-link">
+                                <li>
+                                    <a href="#">Live Chat</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('faqs') }}">FAQ</a>
+                                </li>  <li>
+                                    <a href="{{ route('blog') }}">Blogs</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact-us') }}">Contact us</a>
+                                </li>
+                              
+                            </ul>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                            <div class="footer-box">
-                                <h3 class="title-medium-light title-bar-left size-lg">Follow Us On</h3>
-                                   
-                                <ul class="folow-us">
-                                    <li>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="footer-box">
+                            <h3 class="title-medium-light title-bar-left size-lg">Follow Us On</h3>
+                            <ul class="folow-us">
+                              <li>
                                         <a href="#">
                                             <img src="{{ asset('justping-front/img/footer/follow1.jpg') }}" alt="follow">
                                         </a>
@@ -331,10 +332,8 @@
                                             <img src="{{ asset('justping-front/img/footer/follow2.jpg') }}" alt="follow">
                                         </a>
                                     </li>
-                                </ul>
-                                  @if($global_setting->twitter!=''||$global_setting->facebook!=''||$global_setting->linkedin!=''||$global_setting->instagram!=''||$global_setting->youtube!=''||$global_setting->pinterest)
-                                
-                                <ul class="social-link">
+                            </ul>
+                             <ul class="social-link">
                                       @if($global_setting->facebook!='')
                                     <li class="fa-classipost">
                                         <a href="{{ $global_setting->facebook }}">
@@ -371,79 +370,88 @@
                                     </li>
                                     @endif
                                 </ul>
-                                    
-                                    @endif
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-area-bottom">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-center-mb">
-                            <p>Copyright © justpingme</p>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-right text-center-mb">
-                            <ul>
-                                <li>
-                                    <img src="{{ asset('justping-front/img/footer/card1.jpg') }}" alt="card">
-                                </li>
-                                <li>
-                                    <img src="{{ asset('justping-front/img/footer/card2.jpg') }}" alt="card">
-                                </li>
-                                <li>
-                                    <img src="{{ asset('justping-front/img/footer/card3.jpg') }}" alt="card">
-                                </li>
-                                <li>
-                                    <img src="{{ asset('justping-front/img/footer/card4.jpg') }}" alt="card">
-                                </li>
-                            </ul>
-                        </div>
+        </div>
+        <div class="footer-area-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-center-mb">
+                        <p>Copyright © justping</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-right text-center-mb">
+                        <ul>
+                            <li>
+                                <img src="{{ asset('justping-front/img/footer/card1.jpg') }}" alt="card">
+                            </li>
+                            <li>
+                                <img src="{{ asset('justping-front/img/footer/card2.jpg') }}" alt="card">
+                            </li>
+                            <li>
+                                <img src="{{ asset('justping-front/img/footer/card3.jpg') }}" alt="card">
+                            </li>
+                            <li>
+                                <img src="{{ asset('justping-front/img/footer/card4.jpg') }}" alt="card">
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
+      
         <!-- Footer Area End Here -->
     </div>
-    </div>
-    
-   <!-- Login Popup Modal -->
-    <div id="loginModal">
-        <div class="modal-content">
-            <div class="row">
+    <!-- Modal Start-->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+          <!-- <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <div class="title-default-bold mb-none">Login</div>
+                </div>-->
+                <div class="modal-body">
+                    <div class="login-form">
+					<div class="row">
                 <div class="col-sm-3">
-                    <img src="{{ asset('justping-front/img/Just Ping.png') }}" alt="logo" style="width:100px; height:65px;">
+                    <img src="{{ asset('justping-front/img/Just Ping.png') }}" alt="logo" style="width:100px; height:45px;">
                 </div>
                  <div class="col-sm-9 modelContent">
                      <h2>Welcome</h2>
             <p>Login for a seamless experience</p>
                  </div>
             </div>
-            
-             <div class="loginSection">
-            <!-- Grouped Input with +91 -->
-            <div class="input-group">
+                        <form>
+						<div class="loginSection">
+                            <div class="input-group">
                 <span>+91</span>
-                <input type="text" id="phoneNumber" placeholder="Enter phone number" maxlength="10">
+                <input type="text" id="phoneNumber" placeholder="Enter phone number" maxlength="10" fdprocessedid="3mdkvh">
             </div>
-  <!-- Terms & Conditions Checkbox -->
-            <div class="checkbox-group">
-                <input type="checkbox" id="termsCheckbox">
-                <label for="termsCheckbox">I Agree to Terms and Conditions <a href="#">Terms & Conditions</a></label>
-            </div>
-
-            <button class="send-otp-btn" onclick="sendOTP()">Send OTP</button>
-</div>
-            <div id="otpSection" style="display: none;">
+                            <div class="checkbox checkbox-primary checkbox-group">
+                                <input id="termsCheckbox" type="checkbox">
+                              <label for="termsCheckbox">I Agree to Terms and Conditions <a href="#">Terms &amp; Conditions</a></label>
+                            </div>
+                            <button class="default-big-btn form-sendOtp" onclick="sendOTP()" value="Login">Send OTP</button>
+							
+                            <button class="default-big-btn form-cancel" type="submit" value="">Cancel</button>
+							</div>
+							<div id="otpSection" style="display: none;">
                 <p>Enter the OTP sent to your phone.</p> <div class="input-group">
                 <input type="text" id="otpInput" placeholder="Enter OTP" maxlength="6"></div>
-                <button class="verify-otp-btn" onclick="verifyOTP()">Verify OTP</button>
+                <button class="verify-otp-btn default-big-btn" onclick="verifyOTP()">Verify OTP</button>
             </div>
-
-            <button class="close-btn1 " onclick="closeModal()">Cancel</button>
+                         
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- Modal End-->
+   
      <!-- Floating Banner -->
     <div id="floatingBanner">
         <button class="close-btn" onclick="closeBanner()">✖</button>
@@ -456,25 +464,12 @@
         </div>-->
     </div>
     <!-- Report Abuse Modal End-->
-    
-    @include('front.layouts.scripts')
+   @include('front.layouts.scripts')
 
-    @if($global_setting->tawk_live_chat_status == 'Show')
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/{{ $global_setting->tawk_live_chat_property_id }}/default';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
-    @endif
-<!-- Popup Form -->
-    
+
 </body>
+
+
 </html>
+         
+      

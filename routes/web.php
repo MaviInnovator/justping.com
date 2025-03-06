@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Front\FrontController;
+use App\Http\Controllers\Front\NewAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminSliderController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\Admin\AdminOtherPageItemController;
 use App\Http\Controllers\Admin\AdminMenuController;
 use App\Http\Controllers\Admin\AdminClientController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminSubcategoryController;
 use App\Http\Controllers\Admin\AdminTranslationController;
 use App\Http\Controllers\Admin\AdminLanguageController;
 
@@ -47,6 +49,17 @@ Route::get('/clear-cache', function () {
     return "Cache cleared successfully!";
 });
 
+
+
+
+// New Login Routes
+Route::post('sign-in-new', [FrontController::class, 'signIn'])->name('sign-in-new');
+// brand form///
+//Route::get('/step-one', [FrontController::class, 'stepOne'])->name('wizard.step-one');
+
+Route::post('wizard.store', [FrontController::class, 'wizardstore'])->name('wizard.store');
+
+
 /* Front */
 Route::get('/', [FrontController::class, 'home'])->name('home');
 Route::get('/home/layout/1', [FrontController::class, 'home_1'])->name('home_1');
@@ -54,6 +67,17 @@ Route::get('/home/layout/2', [FrontController::class, 'home_2'])->name('home_2')
 Route::get('/home/layout/3', [FrontController::class, 'home_3'])->name('home_3');
 Route::get('/home/layout/4', [FrontController::class, 'home_4'])->name('home_4');
 Route::get('/about', [FrontController::class, 'about'])->name('about');
+
+Route::get('/privacy-policy', [FrontController::class, 'privacy'])->name('privacy');
+Route::get('/term-and-condition', [FrontController::class, 'terms'])->name('terms');
+Route::get('/post-requirement', [FrontController::class, 'post_requirement'])->name('post-requirement');
+
+Route::get('/faq', [FrontController::class, 'faqs'])->name('faqs');
+Route::get('/bussiness-profile', [FrontController::class, 'bussiness_profile'])->name('bussiness-profile');
+
+Route::get('/listing', [FrontController::class, 'listing'])->name('listing');
+
+Route::get('/listing-details/{id}', [FrontController::class, 'listing_details'])->name('listing_details');
 Route::get('/services', [FrontController::class, 'services'])->name('services');
 Route::get('/service/{slug}', [FrontController::class, 'service'])->name('service');
 Route::get('/license', [FrontController::class, 'licenses'])->name('licenses');
@@ -70,13 +94,11 @@ Route::get('/category/{slug}', [FrontController::class, 'category'])->name('cate
 Route::get('/tag/{name}', [FrontController::class, 'tag'])->name('tag');
 Route::get('/search', [FrontController::class, 'search'])->name('search');
 Route::get('/pricing', [FrontController::class, 'pricing_plans'])->name('pricing_plans');
-Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
+Route::get('/contact', [FrontController::class, 'contact'])->name('contact-us');
 Route::post('/contact/send-message', [FrontController::class, 'contact_send_message'])->name('contact_send_message');
 //Route::post('/enquiry/send-message', [FrontController::class, 'enquiry_send_message'])->name('enquiry_send_message');
 Route::post('/submit-form', [FrontController::class, 'submitForm'])->name('submit.form');
 
-Route::get('/terms-of-use', [FrontController::class, 'terms'])->name('terms');
-Route::get('/privacy-policy', [FrontController::class, 'privacy'])->name('privacy');
 Route::post('/subscriber-submit', [FrontController::class, 'subscriber_submit'])->name('subscriber_submit');
 Route::get('/subscriber-verify/{email}/{token}', [FrontController::class, 'subscriber_verify'])->name('subscriber_verify');
 Route::post('/language-switch', [FrontController::class, 'language_switch'])->name('language_switch');
@@ -317,6 +339,14 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/category/update/{id}',[AdminCategoryController::class,'update'])->name('admin_category_update');
     Route::get('/category/destroy/{id}',[AdminCategoryController::class,'destroy'])->name('admin_category_destroy');
     
+    
+    
+    Route::get('/subcategory/index',[AdminSubcategoryController::class,'index'])->name('admin_subcategory_index');
+    Route::get('/subcategory/create',[AdminSubcategoryController::class,'create'])->name('admin_subcategory_create');
+    Route::post('/subcategory/store',[AdminSubcategoryController::class,'store'])->name('admin_subcategory_store');
+    Route::get('/subcategory/edit/{id}',[AdminSubcategoryController::class,'edit'])->name('admin_subcategory_edit');
+    Route::post('/subcategory/update/{id}',[AdminSubcategoryController::class,'update'])->name('admin_subcategory_update');
+    Route::get('/subcategory/destroy/{id}',[AdminSubcategoryController::class,'destroy'])->name('admin_subcategory_destroy');
     
     
     

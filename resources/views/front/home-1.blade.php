@@ -6,179 +6,148 @@
 @section('content')
 
 <!-- Slider Section -->
- <!-- Products Area Start Here -->
-   <section class="bg-accent s-space-custom-slider fixed-menu-mt">
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                <!-- Indicators/Dots -->
-                <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                
-                <!-- Slides -->
-                <div class="carousel-inner">
-                @foreach($sliders as $item)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                <img src="{{ asset('uploads/'.$item->photo) }}" class="d-block sliderImg" alt="BizzOpp Awards, Celebrities, Nomination">
-                <div class="carousel-caption d-none d-md-block">
-                <!--<h5>First Slide</h5>-->
-                <!--<p>Some placeholder text for the first slide.</p>-->
-                </div>
-                </div>
-                @endforeach
-                
-                </div>
-                
-                </div>
-                
+         <!-- Products Area Start Here -->
+        <section class=" s-space-custom-slider ">
+        
+                        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators/Dots -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+         @foreach($sliders as $item)
+      <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+        <img src="{{ asset('uploads/'.$item->photo) }}" class="d-block sliderImg" alt="BizzOpp Awards, Celebrities, Nomination">
+        <div class="carousel-caption d-none d-md-block">
+          <!--<h5>First Slide</h5>-->
+          <!--<p>Some placeholder text for the first slide.</p>-->
+        </div>
+      </div>
+       @endforeach
+      
+    </div>
+
+    <!-- Controls -->
+    <!--<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">-->
+    <!--  <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+    <!--  <span class="visually-hidden">Previous</span>-->
+    <!--</button>-->
+    <!--<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">-->
+    <!--  <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+    <!--  <span class="visually-hidden">Next</span>-->
+    <!--</button>-->
+  </div>
+
         </section>
         <!-- Products Area End Here -->
+        <!-- Selling Process Area Start Here -->
         <!-- Selling Process Area Start Here -->
         <section class="bg-body s-space-regular">
          <div class="container-fluid">
              <div class="row">
-                 <div class="col-sm-2 ad-banner1" style="background-image: url({{ asset('justping-front/img/banner/sidebanner1.jpeg') }});    background-repeat: no-repeat;"> </div>
+                   <div class="col-sm-2 ad-banner1" style="background-image: url({{ asset('justping-front/img/banner/sidebanner1.jpeg') }} ); background-repeat: no-repeat;
+    background-position: center; height: 972px;"> </div>
                   <div class="col-sm-8">
                       
                <div class="section-title-dark">
 				   <h2>Top Categories</h2>
                </div>
-       <ul class="process-area">
-         <li>
-          <img src="{{ asset('justping-front/img/category/Restaurants.gif') }}" alt="Restaurants" class="img-fluid">
-        <h3>Restaurants</h3>
-       </li>
-       <li>
-      <img src="{{ asset('justping-front/img/category/Hotels.gif') }}" alt="Hotels" class="img-fluid">
-        <h3>Hotels</h3>
-       </li>
-        <li>
-         <img src="{{ asset('justping-front/img/category/Beauty Spa.gif') }}" alt="Beauty Spa" class="img-fluid">
-         <h3>Beauty Spa</h3>
-        </li>
-         <li>
-         <img src="{{ asset('justping-front/img/category/Home Decor.gif') }}" alt="Home Decor" class="img-fluid">
-          <h3>Furniture & Decor </h3>
-        </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Wedding Planning.gif') }}" alt="Wedding Planning" class="img-fluid">
-         <h3>Wedding Planning</h3>
-        </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Education.gif') }}" alt="Education" class="img-fluid">
-         <h3>Education</h3>
-        </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Rent.gif') }}" alt="Rent" class="img-fluid">
-       <h3>Rent</h3>
-        </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Hiring.gif') }}" alt="Hiring" class="img-fluid">
-       <h3>Hire</h3>
-        </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Hospitals.gif') }}" alt="Hospitals" class="img-fluid">
-        <h3>Hospitals</h3>
-        </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Contractors.gif') }}" alt="Contractors" class="img-fluid">
-        <h3>Contractors</h3>
-         </li>
-        <li>
-        <img src="{{ asset('justping-front/img/category/Pet Shops.gif') }}" alt="Pet Shops" class="img-fluid">
-         <h3>Pet Shops</h3>
-         </li>
-        <li>
-         <img src="{{ asset('justping-front/img/category/PG And Hostel.gif') }}" alt="PG And Hostel" class="img-fluid">
-        <h3>PG/Hostels</h3>
-         </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Estate Agent.gif') }}" alt="Estate Agent.gif" class="img-fluid">
-         <h3>Estate Agent</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Dentists.gif') }}" alt="process" class="img-fluid">
-         <h3>Dentists</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/GYM.gif') }}" alt="GYM" class="img-fluid">
-         <h3>Gym</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Loans.gif') }}" alt="Loans" class="img-fluid">
-         <h3>Loans</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Event Organisers.gif') }}" alt="Event Organisers" class="img-fluid">
-         <h3>Event Organisers</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Driving Schools.gif') }}" alt="Driving Schools" class="img-fluid">
-         <h3>Driving Schools</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Packers & Movers.gif') }}" alt="Packers & Movers" class="img-fluid">
-         <h3>Packers & Movers</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Courier Service.gif') }}" alt="Courier Service" class="img-fluid">
-         <h3>Courier Service</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/AC Service.gif') }}" alt="AC Service" class="img-fluid">
-         <h3>AC Services</h3>
-        </li>
-         <li>
-        <img src="{{ asset('justping-front/img/category/Nursing Services.gif') }}" alt="Nursing Services" class="img-fluid">
-         <h3>Nursing Services</h3>
-        </li>
-         <li>
-        <img src="https://vectorified.com/images/scrap-icon-38.png" alt="Nursing Services" class="img-fluid">
-         <h3>Scrap Dealers</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/color/96/no-ant.png" alt="Nursing Services" class="img-fluid">
-         <h3>Pest Control Services</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/ios/100/furniture.png" alt="Nursing Services" class="img-fluid">
-         <h3>Furniture & Decor </h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/ios/100/service--v1.png" alt="Nursing Services" class="img-fluid">
-         <h3>Services</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/color/96/bus2.png" alt="Nursing Services" class="img-fluid">
-         <h3>Transporters</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/external-outline-wichaiwi/100/external-fabrication-small-business-outline-wichaiwi.png" alt="Nursing Services" class="img-fluid">
-         <h3>Fabricators</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/color/96/painting-a-wall.png" alt="Nursing Services" class="img-fluid">
-         <h3>Painting and Contractors</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-medical-equipment-nursing-flaticons-lineal-color-flat-icons.png" alt="Nursing Services" class="img-fluid">
-         <h3>Medical Equipment</h3>
-        </li>
-         <li>
-        <img src="https://img.icons8.com/fluency/48/construction-materials.png" alt="Nursing Services" class="img-fluid">
-         <h3>Construction Materials</h3>
-        </li>
-        </ul>
+               <div class="container">
+                <div class="container mt-4">
+                    <div class="row process-area">
+                         @foreach($category as $item)
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 category-box">
+                           <a href="#" target="_blank"> <img src="{{ asset('uploads/'.$item->icon) }}" alt="Restaurants" class="img-fluid">
+                          <a href="#" target="_blank">  <h3>{{ $item->name }} </h3></a>
+                        </div>
+                       @endforeach
+                    </div>
+                </div>
+                
+            </div>
+            
                   </div>
-				 <div class="col-sm-2 celebrityBanner" style="background-image: url({{ asset('justping-front/img/banner/sidebanner2.jpeg') }});    background-repeat: no-repeat;"></div>
+                  	 <div class="col-sm-2 celebrityBanner" style="background-image: url({{ asset('justping-front/img/banner/sidebanner2.jpeg') }});background-repeat: no-repeat;background-position: center; height: 972px;"></div>
+       
              </div>
          </div>
        </section>
+  
         <!-- Selling Process Area End Here -->
+        
+        <!-- Service Area Start Here -->
+     <!--   <section class="service-layout1  s-space-custom3">
+            <div class="container">
+                <div class="section-title-dark">
+                    <p>Browse Our Top Categories</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service1.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-list-layout1.html">Electronics</a></h3>
+                            <div class="view">(19,805)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service2.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-grid-layout1.html">Cars &amp; Vehicles</a></h3>
+                            <div class="view">(12,857)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service3.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-list-layout2.html">Overseas Jobs</a></h3>
+                            <div class="view">(16,267)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service4.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-grid-layout2.html">Pets &amp; Animals</a></h3>
+                            <div class="view">(1,245)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service5.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-list-layout3.html">Hobby, Sport &amp; Kids</a></h3>
+                            <div class="view">(15,897)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service6.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-grid-layout3.html">House &amp; Appartment</a></h3>
+                            <div class="view">(13,657)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service7.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-list-layout1.html">Education</a></h3>
+                            <div class="view">(19,227)</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 item-mb">
+                        <div class="service-box1 bg-body text-center">
+                            <img src="img/service/service8.png" alt="service" class="img-fluid">
+                            <h3 class="title-medium-dark mb-none"><a href="category-grid-layout1.html">Home &amp; Garden</a></h3>
+                            <div class="view">(11,607)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>-->
        
         <!-- Products Area Start Here -->
-        <section class="products-layout1 bg-body s-space-default best-franchise-opportunity generic" id="best-franchise-opportunity">
+        <section class="products-layout1 products-first s-space-default best-franchise-opportunity generic" id="best-franchise-opportunity">
             <div class="container">
                 <div class="section-title-dark">
                     <h2>Top Business Opportunities</h2>
@@ -761,7 +730,7 @@
                 </div>
             </div>
         </section>
-        <section class="products-layout1 bg-body s-space-default covidproof  generic" id="covidproof">
+        <section class="products-layout1 products-first s-space-default covidproof  generic" id="covidproof">
             <div class="container">
                 <div class="section-title-dark">
                     <h2>Top Franchise Opportunity</h2>
@@ -894,7 +863,7 @@
             </div>
         </section>
         
-        <section class="products-layout1 bg-body s-space-default feature-franchise-companies  generic" id="feature-franchise-companies">
+        <section class="products-layout1 products-first s-space-default feature-franchise-companies  generic" id="feature-franchise-companies">
             <div class="container">
                 <div class="section-title-dark">
                     <h2>Featured BizzOpp Companies</h2>
@@ -1936,8 +1905,6 @@
                 </div>
             </div>
         </section>
-        
-<!-- End Slider Section -->
 
 
 @endsection

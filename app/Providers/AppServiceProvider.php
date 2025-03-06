@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Support\Facades\View;
 
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use App\Models\Setting;
@@ -36,7 +39,11 @@ class AppServiceProvider extends ServiceProvider
         view()->share('global_other_page_items', $other_page_items);
         view()->share('global_menu', $menus);
         view()->share('global_languages', $languages);
-        
+        View::composer('*', function ($view) {
+            $userId = Session::get('user_id');
+            $user = User::find($userId);
+            $view->with('globalUser', $user);
+        });
         Paginator::useBootstrap();
     }
 }

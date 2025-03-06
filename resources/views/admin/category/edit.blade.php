@@ -9,25 +9,47 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        <form action="{{ route('admin_client_update',$client->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('admin_category_update',$categories->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="" class="form-label">{{ __('URL') }}</label>
-                        <input type="text" name="url" class="form-control" value="{{ $client->url }}">
+                        <label for="" class="form-label">{{ __('Name') }}</label>
+                        <input type="text" name="name" class="form-control" value="{{ $categories->name }}">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">{{ __('Slug') }}</label>
+                        <input type="text" name="slug" class="form-control" value="{{ $categories->slug }}">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="" class="form-label">{{ __('Existing Photo') }}</label>
-                        <div><img src="{{ asset('uploads/'.$client->photo) }}" alt="" class="w_200"></div>
+                        <label for="" class="form-label">{{ __('Existing Icon') }}</label>
+                        <div><img src="{{ asset('uploads/'.$categories->icon) }}" alt="" class="w_100"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">{{ __('Change Photo') }}</label>
-                        <div><input type="file" name="photo"></div>
+                        <label for="" class="form-label">{{ __('Change Icon') }}</label>
+                        <div><input type="file" name="icon"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="" class="form-label">{{ __('Existing Banner') }}</label>
+                        <div><img src="{{ asset('uploads/'.$categories->banner) }}" alt="" class="w_100"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">{{ __('Change Banner') }}</label>
+                        <div><input type="file" name="banner"></div>
                     </div>
                 </div>
             </div>

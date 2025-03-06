@@ -1,0 +1,6 @@
+[04-Mar-2025 08:42:37 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\NewAuthController, because the name is already in use in /mnt/home6/gkhxkuli/public_html/vrsoftsolutions.com/justping/app/Http/Controllers/Front/NewAuthController.php on line 20
+[04-Mar-2025 08:43:31 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\NewAuthController, because the name is already in use in /mnt/home6/gkhxkuli/public_html/vrsoftsolutions.com/justping/app/Http/Controllers/Front/NewAuthController.php on line 19
+[04-Mar-2025 08:45:40 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\NewAuthController, because the name is already in use in /mnt/home6/gkhxkuli/public_html/vrsoftsolutions.com/justping/app/Http/Controllers/Front/NewAuthController.php on line 19
+[05-Mar-2025 13:04:34 UTC] PHP Fatal error:  Cannot use empty array elements in arrays in /mnt/home6/gkhxkuli/public_html/vrsoftsolutions.com/justping/app/Models/Subcategory.php on line 16
+[05-Mar-2025 13:05:27 UTC] PHP Fatal error:  Cannot use empty array elements in arrays in /mnt/home6/gkhxkuli/public_html/vrsoftsolutions.com/justping/app/Models/Subcategory.php on line 16
+[05-Mar-2025 13:06:07 UTC] PHP Fatal error:  Cannot use empty array elements in arrays in /mnt/home6/gkhxkuli/public_html/vrsoftsolutions.com/justping/app/Models/Subcategory.php on line 16

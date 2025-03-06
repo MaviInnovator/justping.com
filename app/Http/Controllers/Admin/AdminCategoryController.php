@@ -56,7 +56,7 @@ class AdminCategoryController extends Controller
     public function edit($id)
     {
         $categories = Category::find($id);
-        return view('admin.client.edit', compact('categories'));
+        return view('admin.category.edit', compact('categories'));
     }
 
     public function update(Request $request, $id)
@@ -115,6 +115,6 @@ class AdminCategoryController extends Controller
         }
         $obj->delete();
 
-        return redirect()->route('admin_client_index')->with('success', __('Data is deleted successfully'));
+        return redirect()->route('admin_category_index')->with('success', __('Data is deleted successfully'));
     }
 }
